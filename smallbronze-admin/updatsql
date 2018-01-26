@@ -1,0 +1,13 @@
+v2版本 更新sql
+ALTER TABLE sb_topic_album ADD publish_time TIMESTAMP DEFAULT NULL  NULL COMMENT '发布时间，发布后有值，未发布时为空' AFTER reply_num
+
+ALTER TABLE ot_log MODIFY operation_object ENUM('material', 'material_category', 'topic', 'channel', 'comment', 'system', 'file', 'app_version', 'user', 'report', 'bucket', 'statistics', 'ad', 'activity', 'album') NOT NULL COMMENT '操作对象';
+ALTER TABLE ot_log MODIFY operation_type ENUM('insert', 'edit', 'delete', 'login', 'logout', 'change_password', 'upload', 'on_shelf', 'off_shelf', 'pass', 'un_pass', 'group', 'publish', 'up', 'query', 'put_video', 'remove_video') NOT NULL COMMENT '操作类型';
+
+ALTER TABLE `sb_activity`  CHANGE COLUMN `pre_time` `pre_time` DATETIME NULL COMMENT '活动预热时间' AFTER `instruction`;
+
+ALTER TABLE `sb_tj_base_data`  ADD COLUMN `from_page` INT(10) NOT NULL DEFAULT '0' COMMENT '开关 0 关 1开' AFTER `on_off`;
+
+ALTER TABLE `sb_tj_base_data`  CHANGE COLUMN `from_page` `from_page` INT(10) NOT NULL DEFAULT '0' COMMENT '来源页面1渠道页面2push页面3首页4视频分享5视频播放6视频详情页面7活动页面8活动分享页面9活动详情10合辑页面11合辑分享12合辑详情13广告页面14 tabbar收藏页面' AFTER `on_off`;
+
+ALTER TABLE sb_activity MODIFY instruction TEXT NOT NULL COMMENT '活动规则 富文本类型(大字段)'

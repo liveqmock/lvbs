@@ -1,0 +1,23 @@
+apply plugin: 'war'
+
+dependencies {
+    runtime ("org.apache.tomcat.embed:tomcat-embed-jasper")
+    //如果本地开发测试需要用到上面tomcat 如果部署到外部tomcat需要注释掉
+
+
+
+
+    compile group: 'net.sf.json-lib', name: 'json-lib', version: '2.4','classifier':'jdk15'
+
+    compile group: 'javax.servlet', name: 'jstl', version: '1.2'
+    compile group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+    compile "org.apache.tomcat:tomcat-servlet-api:8.0.36"
+    compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
+
+
+}
+
+
+bootRepackage{
+    mainClass = 'com.daishumovie.admin.AdminApplication'
+}

@@ -1,0 +1,8 @@
+/bin/
+/.classpath
+/.project
+/org.springsource.ide.eclipse.gradle.core.prefs
+/org.springsource.ide.eclipse.gradle.refresh.prefs
+/.settings/
+/data
+/src/test/*

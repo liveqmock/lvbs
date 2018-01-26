@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.daishumovie.dao.mapper.smallbronzeadmin.ResourceEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.daishumovie.dao.model.auth.ResourceEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="parentUuid" property="parentUuid" jdbcType="VARCHAR" />
+    <result column="parentsUuids" property="parentsUuids" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="descn" property="descn" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, uuid, parentUuid, parentsUuids, name, type, path, status, createTime, updateTime, descn
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ot_resources
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="queryByRoleId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select b.id, b.uuid, b.parentUuid, b.parentsUuids, b.name, b.type, 
+           b.path, b.status, b.createTime, b.updateTime, b.descn 
+    from ot_roles a, ot_resources b, ot_resource_role c  
+    where a.id = c.roleId and  b.uuid = c.resourceUuid and a.id = #{roleId,jdbcType=BIGINT}
+  </select>
+  
+  <select id="queryByUserName" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT r.id, r.uuid, r.parentUuid, r.parentsUuids, r.name, r.type, 
+           r.path, r.status, r.createTime, r.updateTime, r.descn 
+    FROM ot_resources r, ot_resource_role rr 
+    WHERE rr.roleId IN ( select ar.roleId from ot_admins a, ot_admin_role ar 
+    					 where a.id = ar.adminId and a.username = #{userName,jdbcType=VARCHAR})
+		  and rr.resourceUuid = r.uuid and LENGTH(r.path)>0
+  </select>
+
+  <select id="queryTopMenu" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT * from ot_resources where parentUuid='-1'
+  </select>
+
+  <select id="queryFunctionMenuByOrigin" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT * from ot_resources
+    where 1 = 1
+    <if test="null != parent_id">
+      and parentsUuids like #{parent_id}
+    </if>
+    and type = 1
+  </select>
+
+  <select id="selectByParam" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from ot_resources
+    where 1=1
+    <if test="entity != null and entity.uuid != null">
+	    and uuid =  #{entity.uuid,jdbcType=VARCHAR}
+	</if>
+    <if test="entity != null and entity.parentsUuids != null">
+	    and parentsUuids =  #{entity.parentsUuids,jdbcType=VARCHAR}
+	</if>
+	<if test="entity != null and entity.status != null">
+	    and status =  #{entity.status,jdbcType=INTEGER}
+	</if>
+	<if test="ids != null">
+	    and uuid in 
+	    <foreach collection="ids" item="item" index="index"  open="(" separator="," close=")">
+	     #{item}
+        </foreach>
+	</if>
+    <if test="orderBy != null and sequence != null">
+	    order by ${orderBy} ${sequence}
+	</if>
+    <if test="start != null and offset != null">
+    	limit #{start,jdbcType=INTEGER}, #{offset,jdbcType=INTEGER}
+    </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ot_resources
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteByCondition" >
+    delete from ot_resources
+    where 1=1
+    <if test="entity != null and entity.uuid != null">
+	    and uuid =  #{entity.uuid,jdbcType=VARCHAR}
+	</if>
+    <if test="entity != null and entity.parentsUuids != null">
+	    and parentsUuids =  #{entity.parentsUuids,jdbcType=VARCHAR}
+	</if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.daishumovie.dao.model.auth.ResourceEntity" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ot_resources (uuid, parentUuid, parentsUuids, 
+      name, type, path, status, 
+      createTime, updateTime, descn
+      )
+    values (#{uuid,jdbcType=VARCHAR}, #{parentUuid,jdbcType=VARCHAR}, #{parentsUuids,jdbcType=VARCHAR}, 
+      #{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{descn,jdbcType=VARCHAR}
+      )
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.daishumovie.dao.model.auth.ResourceEntity" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ot_resources
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="parentUuid != null" >
+        parentUuid,
+      </if>
+      <if test="parentsUuids != null" >
+        parentsUuids,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+      <if test="updateTime != null" >
+        updateTime,
+      </if>
+      <if test="descn != null" >
+        descn,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="parentUuid != null" >
+        #{parentUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="parentsUuids != null" >
+        #{parentsUuids,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="descn != null" >
+        #{descn,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.daishumovie.dao.model.auth.ResourceEntity" >
+    update ot_resources
+    <set >
+      <if test="uuid != null" >
+        uuid = #{uuid,jdbcType=VARCHAR},
+      </if>
+      <if test="parentUuid != null" >
+        parentUuid = #{parentUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="parentsUuids != null" >
+        parentsUuids = #{parentsUuids,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="descn != null" >
+        descn = #{descn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.daishumovie.dao.model.auth.ResourceEntity" >
+    update ot_resources
+    set uuid = #{uuid,jdbcType=VARCHAR},
+      parentUuid = #{parentUuid,jdbcType=VARCHAR},
+      parentsUuids = #{parentsUuids,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      path = #{path,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      descn = #{descn,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

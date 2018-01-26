@@ -1,0 +1,15 @@
+spring.profiles.include: dao-test
+
+#后台相关配置参数
+video.admin:
+  cover_prefix_domain_name: http://daishumovie.com/
+  cover_absolute_path: /usr/local/tomcat_9091/webapps/ROOT/WEB-INF/classes/statics
+
+spring.jackson:
+  date-format: "yyyy-MM-dd HH:mm:ss"
+  default-property-inclusion: NON_NULL
+  time-zone: GMT+8
+
+ali.oss.endpoint: "http://oss-cn-shanghai.aliyuncs.com"
+
+push.msg.environment: false

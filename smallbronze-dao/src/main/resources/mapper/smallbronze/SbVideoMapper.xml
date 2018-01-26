@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daishumovie.dao.mapper.smallbronze.SbVideoMapper">
+  <resultMap id="BaseResultMap" type="com.daishumovie.dao.model.SbVideo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="ref_id" jdbcType="INTEGER" property="refId" />
+    <result column="app_id" jdbcType="INTEGER" property="appId" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="ori_url" jdbcType="VARCHAR" property="oriUrl" />
+    <result column="format_url" jdbcType="VARCHAR" property="formatUrl" />
+    <result column="hls_url" jdbcType="VARCHAR" property="hlsUrl" />
+    <result column="duration" jdbcType="REAL" property="duration" />
+    <result column="dimension" jdbcType="VARCHAR" property="dimension" />
+    <result column="size" jdbcType="INTEGER" property="size" />
+    <result column="cover" jdbcType="VARCHAR" property="cover" />
+    <result column="play_num" jdbcType="INTEGER" property="playNum" />
+    <result column="v_play_num" jdbcType="INTEGER" property="vPlayNum" />
+    <result column="barrage_num" jdbcType="INTEGER" property="barrageNum" />
+    <result column="v_barrage_num" jdbcType="INTEGER" property="vBarrageNum" />
+    <result column="source" jdbcType="INTEGER" property="source" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, ref_id, app_id, uid, ori_url, format_url, hls_url, duration, dimension, size, 
+    cover, play_num, v_play_num, barrage_num, v_barrage_num, source, create_time, modify_time
+  </sql>
+  <select id="selectByExample" parameterType="com.daishumovie.dao.model.SbVideoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sb_video
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sb_video
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sb_video
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.daishumovie.dao.model.SbVideoExample">
+    delete from sb_video
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.daishumovie.dao.model.SbVideo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sb_video (ref_id, app_id, uid, 
+      ori_url, format_url, hls_url, 
+      duration, dimension, size, 
+      cover, play_num, v_play_num, 
+      barrage_num, v_barrage_num, source, 
+      create_time, modify_time)
+    values (#{refId,jdbcType=INTEGER}, #{appId,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, 
+      #{oriUrl,jdbcType=VARCHAR}, #{formatUrl,jdbcType=VARCHAR}, #{hlsUrl,jdbcType=VARCHAR}, 
+      #{duration,jdbcType=REAL}, #{dimension,jdbcType=VARCHAR}, #{size,jdbcType=INTEGER}, 
+      #{cover,jdbcType=VARCHAR}, #{playNum,jdbcType=INTEGER}, #{vPlayNum,jdbcType=INTEGER}, 
+      #{barrageNum,jdbcType=INTEGER}, #{vBarrageNum,jdbcType=INTEGER}, #{source,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.daishumovie.dao.model.SbVideo">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sb_video
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="refId != null">
+        ref_id,
+      </if>
+      <if test="appId != null">
+        app_id,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="oriUrl != null">
+        ori_url,
+      </if>
+      <if test="formatUrl != null">
+        format_url,
+      </if>
+      <if test="hlsUrl != null">
+        hls_url,
+      </if>
+      <if test="duration != null">
+        duration,
+      </if>
+      <if test="dimension != null">
+        dimension,
+      </if>
+      <if test="size != null">
+        size,
+      </if>
+      <if test="cover != null">
+        cover,
+      </if>
+      <if test="playNum != null">
+        play_num,
+      </if>
+      <if test="vPlayNum != null">
+        v_play_num,
+      </if>
+      <if test="barrageNum != null">
+        barrage_num,
+      </if>
+      <if test="vBarrageNum != null">
+        v_barrage_num,
+      </if>
+      <if test="source != null">
+        source,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="refId != null">
+        #{refId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null">
+        #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="oriUrl != null">
+        #{oriUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="formatUrl != null">
+        #{formatUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="hlsUrl != null">
+        #{hlsUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="duration != null">
+        #{duration,jdbcType=REAL},
+      </if>
+      <if test="dimension != null">
+        #{dimension,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        #{size,jdbcType=INTEGER},
+      </if>
+      <if test="cover != null">
+        #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="playNum != null">
+        #{playNum,jdbcType=INTEGER},
+      </if>
+      <if test="vPlayNum != null">
+        #{vPlayNum,jdbcType=INTEGER},
+      </if>
+      <if test="barrageNum != null">
+        #{barrageNum,jdbcType=INTEGER},
+      </if>
+      <if test="vBarrageNum != null">
+        #{vBarrageNum,jdbcType=INTEGER},
+      </if>
+      <if test="source != null">
+        #{source,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.daishumovie.dao.model.SbVideoExample" resultType="java.lang.Long">
+    select count(*) from sb_video
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sb_video
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.refId != null">
+        ref_id = #{record.refId,jdbcType=INTEGER},
+      </if>
+      <if test="record.appId != null">
+        app_id = #{record.appId,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null">
+        uid = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.oriUrl != null">
+        ori_url = #{record.oriUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.formatUrl != null">
+        format_url = #{record.formatUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.hlsUrl != null">
+        hls_url = #{record.hlsUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.duration != null">
+        duration = #{record.duration,jdbcType=REAL},
+      </if>
+      <if test="record.dimension != null">
+        dimension = #{record.dimension,jdbcType=VARCHAR},
+      </if>
+      <if test="record.size != null">
+        size = #{record.size,jdbcType=INTEGER},
+      </if>
+      <if test="record.cover != null">
+        cover = #{record.cover,jdbcType=VARCHAR},
+      </if>
+      <if test="record.playNum != null">
+        play_num = #{record.playNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.vPlayNum != null">
+        v_play_num = #{record.vPlayNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.barrageNum != null">
+        barrage_num = #{record.barrageNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.vBarrageNum != null">
+        v_barrage_num = #{record.vBarrageNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.source != null">
+        source = #{record.source,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyTime != null">
+        modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sb_video
+    set id = #{record.id,jdbcType=INTEGER},
+      ref_id = #{record.refId,jdbcType=INTEGER},
+      app_id = #{record.appId,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=INTEGER},
+      ori_url = #{record.oriUrl,jdbcType=VARCHAR},
+      format_url = #{record.formatUrl,jdbcType=VARCHAR},
+      hls_url = #{record.hlsUrl,jdbcType=VARCHAR},
+      duration = #{record.duration,jdbcType=REAL},
+      dimension = #{record.dimension,jdbcType=VARCHAR},
+      size = #{record.size,jdbcType=INTEGER},
+      cover = #{record.cover,jdbcType=VARCHAR},
+      play_num = #{record.playNum,jdbcType=INTEGER},
+      v_play_num = #{record.vPlayNum,jdbcType=INTEGER},
+      barrage_num = #{record.barrageNum,jdbcType=INTEGER},
+      v_barrage_num = #{record.vBarrageNum,jdbcType=INTEGER},
+      source = #{record.source,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      modify_time = #{record.modifyTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.daishumovie.dao.model.SbVideo">
+    update sb_video
+    <set>
+      <if test="refId != null">
+        ref_id = #{refId,jdbcType=INTEGER},
+      </if>
+      <if test="appId != null">
+        app_id = #{appId,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="oriUrl != null">
+        ori_url = #{oriUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="formatUrl != null">
+        format_url = #{formatUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="hlsUrl != null">
+        hls_url = #{hlsUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="duration != null">
+        duration = #{duration,jdbcType=REAL},
+      </if>
+      <if test="dimension != null">
+        dimension = #{dimension,jdbcType=VARCHAR},
+      </if>
+      <if test="size != null">
+        size = #{size,jdbcType=INTEGER},
+      </if>
+      <if test="cover != null">
+        cover = #{cover,jdbcType=VARCHAR},
+      </if>
+      <if test="playNum != null">
+        play_num = #{playNum,jdbcType=INTEGER},
+      </if>
+      <if test="vPlayNum != null">
+        v_play_num = #{vPlayNum,jdbcType=INTEGER},
+      </if>
+      <if test="barrageNum != null">
+        barrage_num = #{barrageNum,jdbcType=INTEGER},
+      </if>
+      <if test="vBarrageNum != null">
+        v_barrage_num = #{vBarrageNum,jdbcType=INTEGER},
+      </if>
+      <if test="source != null">
+        source = #{source,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.daishumovie.dao.model.SbVideo">
+    update sb_video
+    set ref_id = #{refId,jdbcType=INTEGER},
+      app_id = #{appId,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=INTEGER},
+      ori_url = #{oriUrl,jdbcType=VARCHAR},
+      format_url = #{formatUrl,jdbcType=VARCHAR},
+      hls_url = #{hlsUrl,jdbcType=VARCHAR},
+      duration = #{duration,jdbcType=REAL},
+      dimension = #{dimension,jdbcType=VARCHAR},
+      size = #{size,jdbcType=INTEGER},
+      cover = #{cover,jdbcType=VARCHAR},
+      play_num = #{playNum,jdbcType=INTEGER},
+      v_play_num = #{vPlayNum,jdbcType=INTEGER},
+      barrage_num = #{barrageNum,jdbcType=INTEGER},
+      v_barrage_num = #{vBarrageNum,jdbcType=INTEGER},
+      source = #{source,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="selfPlusMinus">
+    update sb_video
+ 	  set ${columnName} = ${columnName} ${operator}  ${count} 
+	  <if test="_parameter != null">
+		<include refid="Update_By_Example_Where_Clause" />
+	  </if>
+  </update>
+  <update id="selfPlusMinusByPrimaryKey">
+    update sb_video
+ 	  set ${columnName} = ${columnName} ${operator}  ${count} 
+	  where id = ${id}
+  </update>
+  <cache type="com.daishumovie.dao.cache.MyBatisRedisCache" />
+</mapper>

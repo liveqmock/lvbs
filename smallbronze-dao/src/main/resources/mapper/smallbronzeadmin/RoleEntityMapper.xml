@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.daishumovie.dao.mapper.smallbronzeadmin.RoleEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.daishumovie.dao.model.auth.RoleEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="descn" property="descn" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, name, type, status, createTime, updateTime, descn
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ot_roles
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="queryRoleByUser" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select c.id,  c.name, c.type, c.status, c.createTime, c.updateTime, c.descn
+    from ot_admins a, ot_admin_role b, ot_roles c  
+    where a.id = b.adminId and b.roleId = c.id and a.username = #{userName,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectByParam" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from ot_roles
+    where 1=1
+    <if test="entity != null and entity.name != null">
+	    and name =  #{entity.name,jdbcType=VARCHAR}
+	</if>
+	<if test="entity != null and entity.status != null">
+	    and status =  #{entity.status,jdbcType=BIGINT}
+	</if>
+	<if test="entity != null and entity.type != null">
+	    and type =  #{entity.type,jdbcType=INTEGER}
+	</if>
+	<if test="entity != null and entity.typeStr != null">
+	    and type in  (${entity.typeStr})
+	</if>
+    <if test="orderBy != null and sequence != null">
+	    order by ${orderBy} ${sequence}
+	</if>
+    <if test="start != null and offset != null">
+    	limit #{start,jdbcType=INTEGER}, #{offset,jdbcType=INTEGER}
+    </if>
+  </select>
+  
+  <select id="selectResultCountByParam" resultType="java.lang.Integer" >
+    select  count(id)
+    from ot_roles
+    where  1=1
+    <if test="entity != null and entity.name != null">
+	    and name =  #{entity.name,jdbcType=VARCHAR}
+	</if>
+	<if test="entity != null and entity.status != null">
+	    and status =  #{entity.status,jdbcType=BIGINT}
+	</if>
+	<if test="entity != null and entity.type != null">
+	    and type =  #{entity.type,jdbcType=INTEGER}
+	</if>
+	<if test="entity != null and entity.typeStr != null">
+	    and type in  (${entity.typeStr})
+	</if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ot_roles
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteByCondition" parameterType="java.lang.Long" >
+    delete from ot_roles
+    where 1=1
+    <if test="entity != null and entity.id != null">
+	    and id =  #{id,jdbcType=BIGINT}
+	</if>
+    <if test="entity != null and entity.name != null">
+	    and name =  #{entity.name,jdbcType=VARCHAR}
+	</if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.daishumovie.dao.model.auth.RoleEntity" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ot_roles ( name, type,
+      status, createTime, updateTime, 
+      descn)
+    values ( #{name,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER},
+      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{descn,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.daishumovie.dao.model.auth.RoleEntity" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ot_roles
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+      <if test="updateTime != null" >
+        updateTime,
+      </if>
+      <if test="descn != null" >
+        descn,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="descn != null" >
+        #{descn,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.daishumovie.dao.model.auth.RoleEntity" >
+    update ot_roles
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="descn != null" >
+        descn = #{descn,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.daishumovie.dao.model.auth.RoleEntity" >
+    update ot_roles
+    set name = #{name,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      descn = #{descn,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

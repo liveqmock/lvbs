@@ -1,0 +1,32 @@
+package com.daishumovie.base.enums.front;
+public enum PageSource {
+	/*频道、推荐、最新的话题列表*/
+	TOPIC_LIST,
+	/*个人关注的话题列表*/
+	FOLLOW_TOPIC_LIST,
+	/*我发布的话题列表*/
+	MY_TOPIC_LIST,
+	/*他人发表的话题列表*/
+	OTHER_TOPIC_LIST,
+	/*话题详情*/
+	TOPIC_DETAIL,
+	/*话题回复列表--即一级回复*/
+	REPLY_LIST,
+	/*回复的评论列表--即二级回复*/
+	COMMENT_LIST,
+	/*我的评论列表*/
+	MY_COMMENT_LIST,
+	/*他人的评论列表*/
+	OTHER_COMMENT_LIST,
+	/*回复详情页*/
+	REPLY_DETAIL,
+	/*话题详情*/
+	SHARE_TOPIC_DETAIL,
+	/*观看历史*/
+	WATCH_HISTORY,
+	/*普通视频页面*/
+	H5_TOPIC_DETAIL,
+	/*参加活动的视频页面*/
+	H5_ACTIVITY_TOPIC_DETAIL,
+	;
+}

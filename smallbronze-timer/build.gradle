@@ -1,0 +1,8 @@
+
+dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-amqp'
+}
+
+bootRepackage{
+    mainClass="com.daishumovie.timer.TimerApplication"
+}

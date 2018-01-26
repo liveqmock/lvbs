@@ -1,0 +1,38 @@
+server:
+  port: 9091
+  context-path: /
+  maxPostSize: 0
+  sessionTimeout: 720
+
+spring:
+  application.name: admin
+  profiles.active: admin-dev
+  mvc.view:
+    prefix: "/WEB-INF/pages/"
+    suffix: ".jsp"
+
+  #静态资源处理
+  resources:
+    chain:
+      cache: false
+      enabled: true
+      strategy:
+        content:
+          paths:
+            - "statics/*"
+    #1小时
+    cache-period: 3600
+    static-locations:
+      - classpath:/statics/
+
+
+#JACKSON
+spring.jackson:
+  date-format: "yyyy-MM-dd HH:mm:ss"
+  default-property-inclusion: NON_NULL
+  time-zone: GMT+8
+
+#而当我们需要使用CGLIB来实现AOP的时候，需要配置 spring.aop.proxy-target-class=true ，不然默认使用的是标准Java的实现
+spring.aop.proxy-target-class: true
+#自定义排除不需要热部署的资源
+spring.devtools.restart.exclude: "statics/**"

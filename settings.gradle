@@ -1,0 +1,10 @@
+rootProject.name = 'daishumovie-smallbronze'
+include 'smallbronze-dao'
+include 'smallbronze-api'
+include 'smallbronze-util'
+include 'smallbronze-base'
+include 'smallbronze-admin'
+include 'smallbronze-third'
+include 'smallbronze-timer'
+include 'smallbronze-search'
+

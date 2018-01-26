@@ -1,0 +1,75 @@
+server:
+  port: 9095
+  context-path: /
+
+spring:
+  application.name: timer
+  profiles.active: dev
+
+#允许展示的审核状态；
+audit_status: 1,3
+
+
+
+#rabbitmq配置
+spring.rabbitmq:
+  host: 192.168.1.200
+  port: 5672
+  username: guest
+  password: guest
+  listener.simple.acknowledge-mode: NONE # Acknowledge mode of container.
+  publisher-confirms: false # Enable publisher confirms.
+
+---
+spring.profiles: dev
+spring.profiles.include: wechat-dev,dao-dev,search-dev
+content_yellow_url: http://192.168.1.203:8888/api/video/asyncscan
+content_yellow_step: 20
+down_video_file_local_prefix: "/data/xtr/download/video/"
+down_video_cover_prefix: "/data/xtr/download/img/"
+ali.oss.endpoint: "oss-cn-shanghai.aliyuncs.com"
+
+push.environment: false
+---
+spring.profiles: test
+spring.profiles.include: dao-test
+content_yellow_url: http://192.168.1.203:8888/api/video/asyncscan
+content_yellow_step: 20
+down_video_file_local_prefix: "/data/xtr/download/video/"
+down_video_cover_prefix: "/data/xtr/download/img/"
+ali.oss.endpoint: "oss-cn-shanghai.aliyuncs.com"
+
+push.environment: false
+---
+spring.profiles: pre
+spring.profiles.include: dao-pre
+content_yellow_url: http://192.168.1.203:8888/api/video/asyncscan
+content_yellow_step: 20
+down_video_file_local_prefix: "/data/xtr/download/video/"
+down_video_cover_prefix: "/data/xtr/download/img/"
+ali.oss.endpoint: "oss-cn-shanghai-internal.aliyuncs.com"
+
+push.environment: true
+---
+spring.profiles: prod
+spring.profiles.include: dao-prod
+content_yellow_url: http://192.168.1.203:8888/api/video/asyncscan
+content_yellow_step: 20
+down_video_file_local_prefix: "/data/xtr/download/video/"
+down_video_cover_prefix: "/data/xtr/download/img/"
+ali.oss.endpoint: "oss-cn-shanghai-internal.aliyuncs.com"
+
+push.environment: true
+---
+spring.profiles: audit
+spring.profiles.include: dao-audit
+content_yellow_url: http://192.168.1.203:8888/api/video/asyncscan
+content_yellow_step: 20
+down_video_file_local_prefix: "/data/xtr/download/video/"
+down_video_cover_prefix: "/data/xtr/download/img/"
+ali.oss.endpoint: "oss-cn-shanghai-internal.aliyuncs.com"
+
+push.environment: true
+
+
+

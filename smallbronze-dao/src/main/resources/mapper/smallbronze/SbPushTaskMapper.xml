@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daishumovie.dao.mapper.smallbronze.SbPushTaskMapper">
+  <resultMap id="BaseResultMap" type="com.daishumovie.dao.model.SbPushTask">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="alert" jdbcType="VARCHAR" property="alert" />
+    <result column="platform" jdbcType="INTEGER" property="platform" />
+    <result column="way" jdbcType="INTEGER" property="way" />
+    <result column="push_time" jdbcType="TIMESTAMP" property="pushTime" />
+    <result column="target_type" jdbcType="INTEGER" property="targetType" />
+    <result column="target_id" jdbcType="VARCHAR" property="targetId" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="input_json" jdbcType="VARCHAR" property="inputJson" />
+    <result column="output_json" jdbcType="VARCHAR" property="outputJson" />
+    <result column="report_output_json" jdbcType="VARCHAR" property="reportOutputJson" />
+    <result column="msg_id" jdbcType="VARCHAR" property="msgId" />
+    <result column="ios_received_count" jdbcType="INTEGER" property="iosReceivedCount" />
+    <result column="ios_click_times" jdbcType="INTEGER" property="iosClickTimes" />
+    <result column="android_received_count" jdbcType="INTEGER" property="androidReceivedCount" />
+    <result column="android_click_times" jdbcType="INTEGER" property="androidClickTimes" />
+    <result column="pusher_id" jdbcType="INTEGER" property="pusherId" />
+    <result column="modifier" jdbcType="INTEGER" property="modifier" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="modify_time" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, alert, platform, way, push_time, target_type, target_id, status, input_json, 
+    output_json, report_output_json, msg_id, ios_received_count, ios_click_times, android_received_count, 
+    android_click_times, pusher_id, modifier, create_time, modify_time
+  </sql>
+  <select id="selectByExample" parameterType="com.daishumovie.dao.model.SbPushTaskExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sb_push_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="limit != null">
+      <if test="offset != null">
+        limit ${offset}, ${limit}
+      </if>
+      <if test="offset == null">
+        limit ${limit}
+      </if>
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sb_push_task
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sb_push_task
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.daishumovie.dao.model.SbPushTaskExample">
+    delete from sb_push_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.daishumovie.dao.model.SbPushTask">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sb_push_task (alert, platform, way, 
+      push_time, target_type, target_id, 
+      status, input_json, output_json, 
+      report_output_json, msg_id, ios_received_count, 
+      ios_click_times, android_received_count, android_click_times, 
+      pusher_id, modifier, create_time, 
+      modify_time)
+    values (#{alert,jdbcType=VARCHAR}, #{platform,jdbcType=INTEGER}, #{way,jdbcType=INTEGER}, 
+      #{pushTime,jdbcType=TIMESTAMP}, #{targetType,jdbcType=INTEGER}, #{targetId,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{inputJson,jdbcType=VARCHAR}, #{outputJson,jdbcType=VARCHAR}, 
+      #{reportOutputJson,jdbcType=VARCHAR}, #{msgId,jdbcType=VARCHAR}, #{iosReceivedCount,jdbcType=INTEGER}, 
+      #{iosClickTimes,jdbcType=INTEGER}, #{androidReceivedCount,jdbcType=INTEGER}, #{androidClickTimes,jdbcType=INTEGER}, 
+      #{pusherId,jdbcType=INTEGER}, #{modifier,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.daishumovie.dao.model.SbPushTask">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sb_push_task
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="alert != null">
+        alert,
+      </if>
+      <if test="platform != null">
+        platform,
+      </if>
+      <if test="way != null">
+        way,
+      </if>
+      <if test="pushTime != null">
+        push_time,
+      </if>
+      <if test="targetType != null">
+        target_type,
+      </if>
+      <if test="targetId != null">
+        target_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="inputJson != null">
+        input_json,
+      </if>
+      <if test="outputJson != null">
+        output_json,
+      </if>
+      <if test="reportOutputJson != null">
+        report_output_json,
+      </if>
+      <if test="msgId != null">
+        msg_id,
+      </if>
+      <if test="iosReceivedCount != null">
+        ios_received_count,
+      </if>
+      <if test="iosClickTimes != null">
+        ios_click_times,
+      </if>
+      <if test="androidReceivedCount != null">
+        android_received_count,
+      </if>
+      <if test="androidClickTimes != null">
+        android_click_times,
+      </if>
+      <if test="pusherId != null">
+        pusher_id,
+      </if>
+      <if test="modifier != null">
+        modifier,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="modifyTime != null">
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="alert != null">
+        #{alert,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null">
+        #{platform,jdbcType=INTEGER},
+      </if>
+      <if test="way != null">
+        #{way,jdbcType=INTEGER},
+      </if>
+      <if test="pushTime != null">
+        #{pushTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="targetType != null">
+        #{targetType,jdbcType=INTEGER},
+      </if>
+      <if test="targetId != null">
+        #{targetId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="inputJson != null">
+        #{inputJson,jdbcType=VARCHAR},
+      </if>
+      <if test="outputJson != null">
+        #{outputJson,jdbcType=VARCHAR},
+      </if>
+      <if test="reportOutputJson != null">
+        #{reportOutputJson,jdbcType=VARCHAR},
+      </if>
+      <if test="msgId != null">
+        #{msgId,jdbcType=VARCHAR},
+      </if>
+      <if test="iosReceivedCount != null">
+        #{iosReceivedCount,jdbcType=INTEGER},
+      </if>
+      <if test="iosClickTimes != null">
+        #{iosClickTimes,jdbcType=INTEGER},
+      </if>
+      <if test="androidReceivedCount != null">
+        #{androidReceivedCount,jdbcType=INTEGER},
+      </if>
+      <if test="androidClickTimes != null">
+        #{androidClickTimes,jdbcType=INTEGER},
+      </if>
+      <if test="pusherId != null">
+        #{pusherId,jdbcType=INTEGER},
+      </if>
+      <if test="modifier != null">
+        #{modifier,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.daishumovie.dao.model.SbPushTaskExample" resultType="java.lang.Long">
+    select count(*) from sb_push_task
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sb_push_task
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.alert != null">
+        alert = #{record.alert,jdbcType=VARCHAR},
+      </if>
+      <if test="record.platform != null">
+        platform = #{record.platform,jdbcType=INTEGER},
+      </if>
+      <if test="record.way != null">
+        way = #{record.way,jdbcType=INTEGER},
+      </if>
+      <if test="record.pushTime != null">
+        push_time = #{record.pushTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.targetType != null">
+        target_type = #{record.targetType,jdbcType=INTEGER},
+      </if>
+      <if test="record.targetId != null">
+        target_id = #{record.targetId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.inputJson != null">
+        input_json = #{record.inputJson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outputJson != null">
+        output_json = #{record.outputJson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reportOutputJson != null">
+        report_output_json = #{record.reportOutputJson,jdbcType=VARCHAR},
+      </if>
+      <if test="record.msgId != null">
+        msg_id = #{record.msgId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iosReceivedCount != null">
+        ios_received_count = #{record.iosReceivedCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.iosClickTimes != null">
+        ios_click_times = #{record.iosClickTimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.androidReceivedCount != null">
+        android_received_count = #{record.androidReceivedCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.androidClickTimes != null">
+        android_click_times = #{record.androidClickTimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.pusherId != null">
+        pusher_id = #{record.pusherId,jdbcType=INTEGER},
+      </if>
+      <if test="record.modifier != null">
+        modifier = #{record.modifier,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyTime != null">
+        modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sb_push_task
+    set id = #{record.id,jdbcType=INTEGER},
+      alert = #{record.alert,jdbcType=VARCHAR},
+      platform = #{record.platform,jdbcType=INTEGER},
+      way = #{record.way,jdbcType=INTEGER},
+      push_time = #{record.pushTime,jdbcType=TIMESTAMP},
+      target_type = #{record.targetType,jdbcType=INTEGER},
+      target_id = #{record.targetId,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      input_json = #{record.inputJson,jdbcType=VARCHAR},
+      output_json = #{record.outputJson,jdbcType=VARCHAR},
+      report_output_json = #{record.reportOutputJson,jdbcType=VARCHAR},
+      msg_id = #{record.msgId,jdbcType=VARCHAR},
+      ios_received_count = #{record.iosReceivedCount,jdbcType=INTEGER},
+      ios_click_times = #{record.iosClickTimes,jdbcType=INTEGER},
+      android_received_count = #{record.androidReceivedCount,jdbcType=INTEGER},
+      android_click_times = #{record.androidClickTimes,jdbcType=INTEGER},
+      pusher_id = #{record.pusherId,jdbcType=INTEGER},
+      modifier = #{record.modifier,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      modify_time = #{record.modifyTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.daishumovie.dao.model.SbPushTask">
+    update sb_push_task
+    <set>
+      <if test="alert != null">
+        alert = #{alert,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null">
+        platform = #{platform,jdbcType=INTEGER},
+      </if>
+      <if test="way != null">
+        way = #{way,jdbcType=INTEGER},
+      </if>
+      <if test="pushTime != null">
+        push_time = #{pushTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="targetType != null">
+        target_type = #{targetType,jdbcType=INTEGER},
+      </if>
+      <if test="targetId != null">
+        target_id = #{targetId,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="inputJson != null">
+        input_json = #{inputJson,jdbcType=VARCHAR},
+      </if>
+      <if test="outputJson != null">
+        output_json = #{outputJson,jdbcType=VARCHAR},
+      </if>
+      <if test="reportOutputJson != null">
+        report_output_json = #{reportOutputJson,jdbcType=VARCHAR},
+      </if>
+      <if test="msgId != null">
+        msg_id = #{msgId,jdbcType=VARCHAR},
+      </if>
+      <if test="iosReceivedCount != null">
+        ios_received_count = #{iosReceivedCount,jdbcType=INTEGER},
+      </if>
+      <if test="iosClickTimes != null">
+        ios_click_times = #{iosClickTimes,jdbcType=INTEGER},
+      </if>
+      <if test="androidReceivedCount != null">
+        android_received_count = #{androidReceivedCount,jdbcType=INTEGER},
+      </if>
+      <if test="androidClickTimes != null">
+        android_click_times = #{androidClickTimes,jdbcType=INTEGER},
+      </if>
+      <if test="pusherId != null">
+        pusher_id = #{pusherId,jdbcType=INTEGER},
+      </if>
+      <if test="modifier != null">
+        modifier = #{modifier,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.daishumovie.dao.model.SbPushTask">
+    update sb_push_task
+    set alert = #{alert,jdbcType=VARCHAR},
+      platform = #{platform,jdbcType=INTEGER},
+      way = #{way,jdbcType=INTEGER},
+      push_time = #{pushTime,jdbcType=TIMESTAMP},
+      target_type = #{targetType,jdbcType=INTEGER},
+      target_id = #{targetId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      input_json = #{inputJson,jdbcType=VARCHAR},
+      output_json = #{outputJson,jdbcType=VARCHAR},
+      report_output_json = #{reportOutputJson,jdbcType=VARCHAR},
+      msg_id = #{msgId,jdbcType=VARCHAR},
+      ios_received_count = #{iosReceivedCount,jdbcType=INTEGER},
+      ios_click_times = #{iosClickTimes,jdbcType=INTEGER},
+      android_received_count = #{androidReceivedCount,jdbcType=INTEGER},
+      android_click_times = #{androidClickTimes,jdbcType=INTEGER},
+      pusher_id = #{pusherId,jdbcType=INTEGER},
+      modifier = #{modifier,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="selfPlusMinus">
+    update sb_push_task
+ 	  set ${columnName} = ${columnName} ${operator}  ${count} 
+	  <if test="_parameter != null">
+		<include refid="Update_By_Example_Where_Clause" />
+	  </if>
+  </update>
+  <update id="selfPlusMinusByPrimaryKey">
+    update sb_push_task
+ 	  set ${columnName} = ${columnName} ${operator}  ${count} 
+	  where id = ${id}
+  </update>
+</mapper>

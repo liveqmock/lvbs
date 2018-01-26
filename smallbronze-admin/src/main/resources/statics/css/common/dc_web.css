@@ -1,0 +1,19 @@
+body {
+    font-size: 12px;
+}
+.l-table-edit-td {
+    padding: 5px;
+}
+.l-button-submit, .l-button-test {
+    width: 80px;
+    float: left;
+    margin-left: 10px;
+    padding-bottom: 2px;
+    margin-top: 10px;
+}
+tr.image_tr{
+    display: none;
+}
+font.url_error_info{
+    display: none;
+}

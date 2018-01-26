@@ -1,0 +1,33 @@
+#订阅号
+subscription:
+  #蓝海绵订阅号
+  app-id: wx06ed82da13ab6c2b
+  app-secret: 9d5958bf005a33e8596f64e3b5496059
+
+#服务号
+service:
+  #蓝海绵服务号
+  app-id: wxb054ea6d0912515d
+  app-secret: 21626bb84a9ae5801ddabf4ac4a754c3
+
+#服务器地址
+haimian.host: m.lanhaimian.com
+
+
+#蓝海绵APP
+app:
+  small-bronze:
+    app-id: wxa686a708ed30f4b7
+    app-secret: ec5fcfc3152cd2a1e19ae474a1b5e538
+
+#微博
+weibo:
+  client-id: 2414845220
+  client-secret: cecc9fe8d7d4476e93d67aef2764f8d4
+  redirect-uri:
+
+#QQ
+qq:
+  app-id: 1106266621
+  app-key: VatsJPAUSYCRHedC
+  host: "http://openapi.tencentyun.com"

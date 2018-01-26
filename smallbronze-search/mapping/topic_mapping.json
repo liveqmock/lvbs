@@ -1,0 +1,42 @@
+{
+  "topic": {
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "appId": {
+        "type": "integer"
+      },
+      "channelId": {
+        "type": "integer"
+      },
+      "uid": {
+        "type": "integer"
+      },
+      "videoId": {
+        "type": "integer"
+      },
+      "activityId": {
+        "type": "integer"
+      },
+      "followNum": {
+        "type": "integer"
+      },
+      "replyNum": {
+        "type": "integer"
+      },
+      "playNum": {
+        "type": "integer"
+      },
+      "title": {
+        "type": "text",
+        "index_options": "offsets",
+        "analyzer": "ik_smart"
+      },
+      "publishTime": {
+        "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis",
+        "type": "date"
+      }
+    }
+  }
+}

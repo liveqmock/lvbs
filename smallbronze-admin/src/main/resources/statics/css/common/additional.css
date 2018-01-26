@@ -1,0 +1,61 @@
+/*附加样式,覆盖控件及bootstrap*/
+@charset "UTF-8";
+.operation_btn {
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    cursor: pointer;
+}
+
+.operation_btn_with_margin {
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    cursor: pointer;
+    margin-left: 2px;
+}
+
+.operation_btn:hover,.operation_btn_with_margin:hover {
+    background-color: #000;
+    color: #eee
+}
+
+.operation_btn:focus,.operation_btn_with_margin:focus {
+    outline: 5px;
+}
+
+span.close-span {
+    margin: 24px 20px 0 95%;
+    cursor: pointer;
+    font-size: 25px;
+    position: fixed;
+}
+
+span.close-span > img {
+    width: 40px;
+}
+
+div.jq22-container {
+    text-align: left;
+}
+
+img.file_upload {
+    cursor: pointer;
+}
+
+span.file_info {
+    display: none;
+}
+
+input[type=file] {
+    display: none!important;
+}
+
+span.file_info > p {
+    float: right;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-right: 400px;
+}
+
+span.file_info > img {
+    cursor: pointer;
+}

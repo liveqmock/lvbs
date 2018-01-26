@@ -1,0 +1,32 @@
+{
+  "album": {
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "appId": {
+        "type": "integer"
+      },
+      "replyNum": {
+        "type": "integer"
+      },
+      "topicIds": {
+        "type": "text"
+      },
+      "title": {
+        "type": "text",
+        "index_options": "offsets",
+        "analyzer": "ik_smart"
+      },
+      "subtitle": {
+        "type": "text",
+        "index_options": "offsets",
+        "analyzer": "ik_smart"
+      },
+      "publishTime": {
+        "format": "yyyy-MM-dd HH:mm:ss||yyyy-MM-dd||epoch_millis",
+        "type": "date"
+      }
+    }
+  }
+}

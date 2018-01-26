@@ -1,0 +1,34 @@
+{
+  "user": {
+    "properties": {
+      "uid": {
+        "type": "integer"
+      },
+      "appId": {
+        "type": "integer"
+      },
+      "sex": {
+        "type": "integer"
+      },
+      "followNum": {
+        "type": "integer"
+      },
+      "fansNum": {
+        "type": "integer"
+      },
+      "publishCount": {
+        "type": "integer"
+      },
+      "nickName": {
+        "type": "text",
+        "index_options": "offsets",
+        "analyzer": "ik_smart",
+        "fields": {
+          "raw": {
+            "type": "keyword"
+          }
+        }
+      }
+    }
+  }
+}

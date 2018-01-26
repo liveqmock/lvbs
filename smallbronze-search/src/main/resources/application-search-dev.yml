@@ -1,0 +1,9 @@
+spring.elasticsearch.jest:
+  connection-timeout: 3000 # Connection timeout in milliseconds.
+  multi-threaded: true # Enable connection requests from multiple execution threads.
+  proxy.host:  # Proxy host the HTTP client should use.
+  proxy.port:  # Proxy port the HTTP client should use.
+  read-timeout: 3000 # Read timeout in milliseconds.
+  uris: http://192.168.1.203:9200,http://192.168.1.203:9201,http://192.168.1.203:9202
+  username: elastic # Login user.
+  password: daishumovie # Login password.

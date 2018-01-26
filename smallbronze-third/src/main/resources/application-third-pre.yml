@@ -1,0 +1,34 @@
+#订阅号
+subscription:
+ #爱看solo服务号
+  app-id: wx91a5b4846253b478
+  app-secret: 7cbca51e38a02857875ae28a2a3fd3db
+#  #爱看solo -未认证
+#  app-id: wx8cfb0413febe85db
+#  app-secret: 3f6ce3fb0d6fdac1d56530e3d90fea74
+
+#服务号
+service:
+  #爱看solo服务号
+  app-id: wx91a5b4846253b478
+  app-secret: 7cbca51e38a02857875ae28a2a3fd3db
+
+#服务器地址
+haimian.host: m.pre.lanhaimian.com
+
+#小铜人APP
+app:
+  small-bronze:
+    app-id: wxa686a708ed30f4b7
+    app-secret: ec5fcfc3152cd2a1e19ae474a1b5e538
+
+
+weibo:
+  client-id: 2414845220
+  client-secret: cecc9fe8d7d4476e93d67aef2764f8d4
+  redirect-uri:
+
+qq:
+  app-id: 1106266621
+  app-key: VatsJPAUSYCRHedC
+  host: "http://openapi.tencentyun.com"

@@ -1,0 +1,48 @@
+#数据库连接
+hikari:
+  datasource:
+    primary:
+      driverClassName: com.mysql.jdbc.Driver
+      username: smallbronze
+      password: smallbronze
+      jdbcUrl: "jdbc:mysql://10.30.49.235:6033/smallbronze?autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf-8&useSSL=false"
+      autoCommit: true
+      #连接超时5s
+      connectionTimeout:  6000
+      #空闲超时时间（10分钟）
+      idleTimeout:  600000
+      #最大存活时间 （最好设置）默认30分钟
+      maxLifetime: 1800000
+      #最大连接池大小
+      maximumPoolSize: 50
+      minimumIdle: 5
+    secondary:
+      driverClassName: com.mysql.jdbc.Driver
+      username: smallbronze
+      password: smallbronze
+      jdbcUrl: "jdbc:mysql://10.30.49.235:6033/smallbronzeAdmin?autoReconnect=true&failOverReadOnly=false&useUnicode=true&characterEncoding=utf-8&useSSL=false"
+      autoCommit: true
+      #连接超时5s
+      connectionTimeout:  6000
+      #空闲超时时间（10分钟）
+      idleTimeout:  600000
+      #最大存活时间 （最好设置）默认30分钟
+      maxLifetime: 1800000
+      #最大连接池大小
+      maximumPoolSize: 10
+      minimumIdle: 5
+
+#redis连接
+spring.redis:
+  host: 10.30.57.207
+  password:
+  pool:
+    max-active: 300
+    max-idle: 200
+    max-wait: 10000
+    min-idle: 20
+  port: 6379
+ali.oss.endpoint: "http://oss-cn-shanghai-internal.aliyuncs.com"
+
+#格式 mongodb://{user}:{pwd}@{host}:{port}/{database}
+#spring.data.mongodb.uri: mongodb://root:daishumovie@10.30.49.235:27017/admin

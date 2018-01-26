@@ -1,0 +1,35 @@
+#订阅号
+subscription:
+#  #朱瑞松的测试号
+  app-id: wx001b2434f6413f53
+  app-secret: d20dac82bc65e5622a87b2ff573d71d3
+  #爱看solo
+#  app-id: wx8cfb0413febe85db
+#  app-secret: 3f6ce3fb0d6fdac1d56530e3d90fea74
+
+#服务号
+service:
+  #朱瑞松的测试号
+  app-id: wx001b2434f6413f53
+  app-secret: d20dac82bc65e5622a87b2ff573d71d3
+
+
+#服务器地址
+haimian.host: m.movie.com
+
+#小铜人
+app:
+  small-bronze:
+    app-id: wxa686a708ed30f4b7
+    app-secret: ec5fcfc3152cd2a1e19ae474a1b5e538
+
+
+weibo:
+  client-id: 2414845220
+  client-secret: cecc9fe8d7d4476e93d67aef2764f8d4
+  redirect-uri: http://daishumovie.f3322.net:8090/weibo/call
+
+qq:
+  app-id: 1106266621
+  app-key: VatsJPAUSYCRHedC
+  host: "http://openapi.sparta.html5.qq.com"

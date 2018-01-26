@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.daishumovie.dao.mapper.smallbronzeadmin.AdminRoleEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.daishumovie.dao.model.auth.AdminRoleEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="roleId" property="roleId" jdbcType="BIGINT" />
+    <result column="adminId" property="adminId" jdbcType="BIGINT" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+    id, roleId, adminId
+  </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ot_admin_role
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectByParam" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from ot_admin_role
+    where 1=1
+    <if test="entity != null and entity.roleId != null">
+	    and roleId =  #{entity.roleId,jdbcType=BIGINT}
+	</if>
+    <if test="entity != null and entity.adminId != null">
+	    and adminId =  #{entity.adminId,jdbcType=BIGINT}
+	</if>
+	<if test="ids != null">
+	    and roleId in 
+	    <foreach collection="ids" item="item" index="index"  open="(" separator="," close=")">
+	     #{item}
+        </foreach>
+	</if>
+    <if test="orderBy != null and sequence != null">
+	    order by ${orderBy} ${sequence}
+	</if>
+	<if test="start != null and offset != null">
+    	limit #{start,jdbcType=INTEGER}, #{offset,jdbcType=INTEGER}
+    </if>
+  </select>
+
+  <select id="selectByEntity" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from ot_admin_role
+    where 1=1
+    <if test="entity != null and entity.roleId != null">
+	    and roleId =  #{entity.roleId,jdbcType=BIGINT}
+	</if>
+    <if test="entity != null and entity.adminId != null">
+	    and adminId =  #{entity.adminId,jdbcType=BIGINT}
+	</if>
+  </select>
+
+  <select id="selectResultCountByParam" resultType="java.lang.Integer"  >
+    select  count(id)
+    from ot_admin_role
+    where 1=1
+    <if test="entity != null and entity.roleId != null">
+      and roleId =  #{entity.roleId,jdbcType=BIGINT}
+    </if>
+    <if test="entity != null and entity.adminId != null">
+      and adminId =  #{entity.adminId,jdbcType=BIGINT}
+    </if>
+    <if test="ids != null">
+      and roleId in
+      <foreach collection="ids" item="item" index="index"  open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ot_admin_role
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteByCondition" >
+    delete from ot_admin_role
+    where 1=1
+    <if test="entity != null and entity.id != null">
+	    and id =  #{entity.id,jdbcType=BIGINT}
+	</if>
+    <if test="entity != null and entity.roleId != null">
+	    and roleId =  #{entity.roleId,jdbcType=BIGINT}
+	</if>
+    <if test="entity != null and entity.adminId != null">
+	    and adminId =  #{entity.adminId,jdbcType=BIGINT}
+	</if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.daishumovie.dao.model.auth.AdminRoleEntity" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ot_admin_role (roleId, adminId)
+    values (#{roleId,jdbcType=BIGINT}, #{adminId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.daishumovie.dao.model.auth.AdminRoleEntity" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ot_admin_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        roleId,
+      </if>
+      <if test="adminId != null" >
+        adminId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="adminId != null" >
+        #{adminId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.daishumovie.dao.model.auth.AdminRoleEntity" >
+    update ot_admin_role
+    <set >
+      <if test="roleId != null" >
+        roleId = #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="adminId != null" >
+        adminId = #{adminId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.daishumovie.dao.model.auth.AdminRoleEntity" >
+    update ot_admin_role
+    set roleId = #{roleId,jdbcType=BIGINT},
+      adminId = #{adminId,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

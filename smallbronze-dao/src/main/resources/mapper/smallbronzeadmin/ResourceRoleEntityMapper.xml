@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.daishumovie.dao.mapper.smallbronzeadmin.ResourceRoleEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.daishumovie.dao.model.auth.ResourceRoleEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="roleId" property="roleId" jdbcType="BIGINT" />
+    <result column="resourceUuid" property="resourceUuid" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, roleId, resourceUuid
+  </sql>
+
+  <resultMap id="ResourceResultMap" type="com.daishumovie.dao.model.auth.ResourceEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="uuid" property="uuid" jdbcType="VARCHAR" />
+    <result column="parentUuid" property="parentUuid" jdbcType="VARCHAR" />
+    <result column="parentsUuids" property="parentsUuids" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="descn" property="descn" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="resource_column_list">
+    id, uuid, parentUuid, parentsUuids, name, type, path, status, createTime, updateTime, descn
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from ot_resource_role
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByResourceIds" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from ot_resource_role
+    where 1=1
+    <if test="resourceIds != null">
+      and resourceUuid in
+      <foreach collection="resourceIds" item="item" index="index"  open="(" separator="," close=")">
+        #{item}
+      </foreach>
+    </if>
+  </select>
+
+  <select id="selectByRoleIds" resultMap="ResourceResultMap">
+    select
+      <include refid="resource_column_list"/>
+    from ot_resources
+    where 1 = 1
+    <if test="role_ids != null">
+    and uuid in (select resourceUuid from ot_resource_role where roleId in
+        <foreach collection="role_ids" item="item" index="index" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    )
+    order by sort asc,createTime asc
+    </if>
+  </select>
+
+  <select id="selectByParam" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from ot_resource_role
+    where 1=1
+    <if test="entity != null and entity.roleId != null">
+	    and roleId =  #{entity.roleId,jdbcType=BIGINT}
+	</if>
+    <if test="entity != null and entity.resourceUuid != null">
+	    and resourceUuid =  #{entity.resourceUuid,jdbcType=VARCHAR}
+	</if>
+	<if test="ids != null">
+	    and roleId in 
+	    <foreach collection="ids" item="item" index="index"  open="(" separator="," close=")">
+	     #{item}
+        </foreach>
+	</if>
+    <if test="orderBy != null and sequence != null">
+	    order by ${orderBy} ${sequence}
+	</if>
+    <if test="start != null and offset != null">
+    	limit #{start,jdbcType=INTEGER}, #{offset,jdbcType=INTEGER}
+    </if>
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ot_resource_role
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <delete id="deleteByCondition" >
+    delete from ot_resource_role
+    where 1=1
+    <if test="entity != null and entity.id != null">
+	    and id =  #{id,jdbcType=BIGINT}
+	</if>
+    <if test="entity != null and entity.roleId != null">
+	    and roleId =  #{entity.roleId,jdbcType=BIGINT}
+	</if>
+    <if test="entity != null and entity.resourceUuid != null">
+	    and resourceUuid =  #{entity.resourceUuid,jdbcType=VARCHAR}
+	</if>
+  </delete>
+  
+  <insert id="insert" parameterType="com.daishumovie.dao.model.auth.ResourceRoleEntity" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ot_resource_role (roleId, resourceUuid)
+    values (#{roleId,jdbcType=BIGINT}, #{resourceUuid,jdbcType=VARCHAR})
+  </insert>
+  
+  <insert id="insertSelective" parameterType="com.daishumovie.dao.model.auth.ResourceRoleEntity" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into ot_resource_role
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        roleId,
+      </if>
+      <if test="resourceUuid != null" >
+        resourceUuid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="roleId != null" >
+        #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="resourceUuid != null" >
+        #{resourceUuid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.daishumovie.dao.model.auth.ResourceRoleEntity" >
+    update ot_resource_role
+    <set >
+      <if test="roleId != null" >
+        roleId = #{roleId,jdbcType=BIGINT},
+      </if>
+      <if test="resourceUuid != null" >
+        resourceUuid = #{resourceUuid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.daishumovie.dao.model.auth.ResourceRoleEntity" >
+    update ot_resource_role
+    set roleId = #{roleId,jdbcType=BIGINT},
+      resourceUuid = #{resourceUuid,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,197 @@
+server:
+  port: 9090
+  context-path: /
+  maxPostSize: 0
+spring:
+  application.name: api
+  profiles.active: dev
+
+
+#而当我们需要使用CGLIB来实现AOP的时候，需要配置 spring.aop.proxy-target-class=true ，不然默认使用的是标准Java的实现
+spring.aop.proxy-target-class: true
+
+#JACKSON
+spring.jackson:
+  date-format: "yyyy-MM-dd HH:mm:ss"
+  default-property-inclusion: NON_NULL
+  time-zone: GMT+8
+
+app:
+  defaultTagId: 1
+  defaultTagType: 1
+  hotId: 1
+  countdown: 3
+  mustBindMobile: 0
+  downloadPage: http://m.daishumovie.com/copperShare/share_Android.html
+
+
+#短信
+aliyun:
+  sms-sign: "小铜人"
+  sms-template-register: "SMS_46990010"
+  sms-template-resetpwd: "SMS_49000054"
+  sms-template-binding: "SMS_81220012" #验证码为${code},请输入验证码完成手机号绑定
+
+smallbronze:
+  pcm_per_frame_play_timelong: 10
+
+search.enabled: true
+
+
+
+---
+spring.profiles: dev
+spring.profiles.include: dao-dev,third-dev,search-dev
+
+ali.oss.endpoint: "oss-cn-shanghai.aliyuncs.com"
+app:
+  apiPrefix: http://sdev.daishumovie.cn
+  sharePrefix: http://m.daishumovie.cn
+  autoplayUsingWifi: 0
+  mustBindMobile: 0
+  maxVideoSize: 209715200
+  recBucketId: 2
+
+aliyun:
+  sms-is-send: false
+#允许展示的审核状态； 
+audit_status: 4
+comment_audit_status: 1,4
+
+#上传音频文件临时路径
+smallbronze:
+  audio_file_temp_path: '/data/path/full/smallbronze/audio/'
+
+#rabbitmq配置
+spring.rabbitmq:
+  host: 192.168.1.200
+  port: 5672
+  username: guest
+  password: guest
+  listener.simple.acknowledge-mode: NONE # Acknowledge mode of container.
+  publisher-confirms: false # Enable publisher confirms.
+
+multipartupload:
+  partPath: "/home/data/video/multipartpart"
+  partSize: 102400
+  location: "/home/data/video/multipartpart"
+  upload_is_aliyun: true
+
+webUrlForAward: "http://m.daishumovie.cn/activityLuck/index.html?activityId=10001"
+---
+spring.profiles: test
+spring.profiles.include: dao-test,third-test,search-test
+
+ali.oss.endpoint: "oss-cn-shanghai.aliyuncs.com"
+app:
+  apiPrefix: http://sbdev.daishumovie.cn
+  sharePrefix: http://m.movie.com
+  autoplayUsingWifi: 0
+  mustBindMobile: 0
+  maxVideoSize: 52428800
+  recBucketId: 2
+aliyun:
+  sms-is-send: true
+#允许展示的审核状态； 
+audit_status: 4
+comment_audit_status: 1,4
+
+#上传音频文件临时路径
+smallbronze:
+  audio_file_temp_path: '/data/path/full/smallbronze/audio/'
+
+multipartupload:
+  partPath: "/home/data/video/multipartpart"
+  partSize: 102400
+  location: "/home/data/video/multipartpart"
+  upload_is_aliyun: true
+
+webUrlForAward: "http://m.daishumovie.cn/activityLuck/index.html?activityId=10001"
+
+---
+spring.profiles: pre
+spring.profiles.include: dao-pre,third-pre,search-pre
+
+ali.oss.endpoint: "oss-cn-shanghai-internal.aliyuncs.com"
+app:
+  apiPrefix: http://spre.daishumovie.cn
+  sharePrefix: https://m.daishumovie.com
+  autoplayUsingWifi: 0
+  mustBindMobile: 0
+  maxVideoSize: 52428800
+  recBucketId: 100
+aliyun:
+  sms-is-send: true
+  
+#允许展示的审核状态； 
+audit_status: 4
+comment_audit_status: 1,4
+#上传音频文件临时路径
+smallbronze:
+  audio_file_temp_path: '/data/path/full/smallbronze/audio/'
+
+multipartupload:
+  partPath: "d:"
+  partSize: 102400
+  location: "d:"
+  upload_is_aliyun: true
+
+webUrlForAward: "http://m.daishumovie.com/activityLuck/index.html?activityId=10001"
+
+---
+spring.profiles: prod
+spring.profiles.include: dao-prod,third-prod,search-prod
+
+ali.oss.endpoint: "oss-cn-shanghai-internal.aliyuncs.com"
+app:
+  apiPrefix: https://sapi.daishumovie.com
+  sharePrefix: https://m.daishumovie.com
+  autoplayUsingWifi: 0
+  mustBindMobile: 0
+  maxVideoSize: 52428800
+  recBucketId: 100
+aliyun:
+  sms-is-send: true
+#允许展示的审核状态； 
+audit_status: 4
+comment_audit_status: 1,4
+#上传音频文件临时路径
+smallbronze:
+  audio_file_temp_path: '/data/path/full/smallbronze/audio/'
+
+multipartupload:
+  partPath: "/data/uploads/"
+  partSize: 102400
+  location: "/data/uploads/"
+  upload_is_aliyun: true
+
+webUrlForAward: "http://m.daishumovie.com/activityLuck/index.html?activityId=10001"
+---
+spring.profiles: audit
+spring.profiles.include: dao-audit,third-prod,search-prod
+
+ali.oss.endpoint: "oss-cn-shanghai-internal.aliyuncs.com"
+app:
+  apiPrefix: https://sapi.daishumovie.com
+  sharePrefix: https://am.daishumovie.com
+  autoplayUsingWifi: 0
+  mustBindMobile: 0
+  maxVideoSize: 52428800
+  recBucketId: 10
+aliyun:
+  sms-is-send: true
+#允许展示的审核状态； 
+audit_status: 4
+comment_audit_status: 1,4
+#上传音频文件临时路径
+smallbronze:
+  audio_file_temp_path: '/data/path/full/smallbronze/audio/'
+
+multipartupload:
+  partPath: "/data/uploads/"
+  partSize: 102400
+  location: "/data/uploads/"
+
+  upload_is_aliyun: true
+
+webUrlForAward: "http://am.daishumovie.com/activityLuck/index.html?activityId=10001"

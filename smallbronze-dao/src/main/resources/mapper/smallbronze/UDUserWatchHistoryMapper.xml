@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.daishumovie.dao.mapper.smallbronze.UDUserWatchHistoryMapper">
+
+
+  <update id="removeDuplicateData">
+    UPDATE
+      sb_user_watch_history A
+    SET
+      A.`status` = 0
+    WHERE A.uid = #{uid}
+      AND A.STATUS = 1
+      AND A.video_id IN
+      (SELECT
+        *
+      FROM
+        (SELECT
+          B.video_id
+        FROM
+          sb_user_watch_history B
+        WHERE B.uid = #{uid}
+          AND B.STATUS = 1
+        GROUP BY B.video_id
+        HAVING COUNT(B.id) > 1) BBB)
+      AND A.id NOT IN
+      (SELECT
+        *
+      FROM
+        (SELECT
+          MAX(C.id)
+        FROM
+          sb_user_watch_history C
+        WHERE C.uid = #{uid}
+          AND C.STATUS = 1
+        GROUP BY C.video_id
+        HAVING COUNT(C.id) > 1) CCC)
+
+  </update>
+
+</mapper>

@@ -1,0 +1,197 @@
+body,html { width: 100%; height: 100%; margin: 0; padding: 0; background-color: #fff; color: #000;}
+ul,li { text-decoration: none; list-style: none; padding: 0; margin: 0;  }
+body { padding: 2px; box-sizing: border-box;font-family: "微软雅黑", "宋体", Arial, sans-serif; font-size: 12px; }
+table,tr,th,td,thead,tbody { margin: 0; padding: 0; }
+a {-moz-user-select: none;-khtml-user-select: none;user-select: none;}
+/* 全局清除浮动样式 */
+.fix{display:inline-block;}
+.fix{display:block;}
+.fix:after{content:"";display:block;height:0px; clear:both;visibility:hidden;}
+
+/*videoExtract*/
+.g-videoWarp {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.myVideo {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.videoPlayer {
+    display: block;
+    margin: 0 auto;
+
+}
+.videoList {
+    width: 25%;
+    height: 100%;
+    position: relative;
+    background-color: #f6f8fc;
+
+}
+.videoList-content {
+    position: absolute;
+    padding: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    top: 0;
+    bottom: 100px;
+    overflow-y: auto;
+}
+.videoList-bottom {
+    position: absolute;
+    bottom: 0;
+    height:100px;
+    width: 100%;
+    text-align: center;
+    font-size: 0;
+    padding-top: 33px;
+    box-sizing: border-box;
+}
+.videoList-bottom>span {
+    display: inline-block;
+    font-size: 20px;
+    line-height:22px;
+    padding: 6px 15px;
+    background-color: #2da5ee;
+    color: #fff;
+    border-radius: 5px;
+    font-weight: 200;
+    cursor: pointer;
+}
+.video-extractList:first-of-type {
+    margin-top: 0;
+}
+.video-extractList {
+    width: 100%;
+    margin-top: 10px;
+}
+.video-extractList-top {
+    width: 100%;
+    height: 32px;
+    font-size: 16px;
+    line-height: 32px;
+}
+.video-extractList-top>span:nth-of-type(1) {
+    float: left;
+}
+
+.video-extractList-top>span:nth-of-type(2) {
+    float: right;
+    display: inline-block;
+    width: 22px;
+    height:22px;
+    border-radius: 50%;
+    text-align: center;
+    line-height:22px;
+    color: #fff;
+    background-color: #2da5ee;
+    cursor: pointer;
+    margin-top: 5px;
+    margin-right: 16px;
+}
+.tishi {
+    display: none;
+    position: absolute;
+    right: 14px;
+    top:55px;
+    left:14px;
+    font-size: 12px;
+    text-align: left;
+    color: #fff;
+    padding: 10px;
+    background-color: #363636;
+    border: 1px solid #d8dde6;
+}
+.tishi-content {
+    width: 100%;
+    position: relative;
+    font-size: 16px;
+    color: #fff;
+}
+.tishi-content>span {
+    font-size: 14px;
+    display: block;
+}
+.tishi-jiao {
+    position: absolute;
+    right: 10px;
+    left: auto;
+    width: 12px;
+    height: 12px;
+    top: -17px;
+    border-top: 1px solid #d8dde6;
+    border-right: 1px solid #d8dde6;
+    background-color: #363636;
+    transform: rotate(-45deg);
+
+}
+.video-extractList-top>span:nth-of-type(2):hover .tishi {
+    display: block;
+}
+.video-extractList-content {
+    width: 100%;
+    padding: 0 8px;
+    box-sizing: border-box;
+    height: 32px;
+    background: rgba(0,0,0,0.1);
+    margin-top: 5px;
+    text-align: left;
+    line-height: 32px;
+}
+.video-extractList-content>span{
+    float: right;
+}
+.addVideoExtract {
+    display: block;
+    width: 140px;
+    height:26px;
+    font-size: 14px;
+    line-height: 26px;
+    text-align: center;
+    margin: 20px auto;
+    border-radius: 13px;
+    background-color: #2da5ee;
+    color: #fff;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+.video-extractList-top>span.removeList {
+    background-color: red;
+}
+.video-extractList-content.z-on {
+    background-color: rgba(139,26,26,0.5);
+}
+.toast {
+    display: none;
+    height: 32px;
+    position: absolute;
+    top:30%;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+.toast>span {
+    display: inline-block;
+    padding: 5px 15px;
+    font-size: 16px;
+    background-color: rgba(0,0,0,0.5);
+    color: #fff;
+    border-radius: 5px;
+}
+
+
+
+
+
+
+
+
+
+
